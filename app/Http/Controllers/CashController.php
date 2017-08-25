@@ -12,12 +12,9 @@ class CashController extends Controller
         return view('cash.index');
     }
 
-    public function store(Request $request)
+    public function store(Pay2Go $pay2go, Request $request)
     {
         $form = $request->except('_token');
-
-        // 建立商店
-        $pay2go = new Pay2Go(env('CASH_STORE_ID'), env('CASH_STORE_HashKey'), env('CASH_STORE_HashIV'));
 
         // 商品資訊
         $order = $pay2go->setOrder($form['MerchantOrderNo'], $form['Amt'], $form['ItemDesc'], $form['Email'])->submitOrder();
